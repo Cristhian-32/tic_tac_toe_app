@@ -82,7 +82,13 @@ class _ListScreenState extends State<ListScreen> {
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(8.0),
                         title: Text(game.nameGame),
-                        subtitle: Text(game.winner),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Ganador: ${game.winner}"),
+                            Text("Puntaje: ${game.score}"),
+                          ],
+                        ),
                       ),
                     ),
                   );
