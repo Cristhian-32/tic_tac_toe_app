@@ -31,15 +31,29 @@ class DatabaseHandler {
       print('ID: ${game['id']}');
       print('Name: ${game['nameGame']}');
       print('Winner: ${game['winner']}');
+      print('Score: ${game['score']}');
       // Imprime otros campos según la estructura de tu tabla
       print('------------');
     }
   }
 
-  Future<void> insertGame(Game game) async {
+  // Future<void> insertGame(Game game) async {
+  //   final db = await initializeDB();
+  //   await db.insert('games', game.toMap(),
+  //       conflictAlgorithm: ConflictAlgorithm.replace);
+  // }
+
+  Future<void> insertGame(
+      {nameGame, namePlayer1, namePlayer2, winner, score, state}) async {
     final db = await initializeDB();
-    await db.insert('games', game.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert('games', {
+      'nameGame': nameGame,
+      'namePlayer1': namePlayer1,
+      'namePlayer2': namePlayer2,
+      'winner': winner,
+      'score': score,
+      'state': state
+    });
   }
 
   Future<List<Game>> getGames() async {
@@ -55,5 +69,9 @@ class DatabaseHandler {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  void updateScore(int score, int roundsPlayed) {
+    score += roundsPlayed * 100;
   }
 }
